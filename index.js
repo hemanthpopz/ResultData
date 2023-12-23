@@ -76,7 +76,7 @@ app.post("/login/", async (request, response) => {
   const selectUserQuery = `SELECT * FROM user WHERE username = '${username}'`;
   const dbUser = await db.get(selectUserQuery);
   if (dbUser === undefined) {
-    response.status(400);
+    
     response.send({ errorMsg: "Invalid User" });
   } else {
     const isPasswordMatched = password === dbUser.password
@@ -87,7 +87,6 @@ app.post("/login/", async (request, response) => {
       const jwtToken = jwt.sign(payload, "MY_SECRET_TOKEN");
       response.send({ jwt_token: jwtToken });
     } else {
-      response.status(400);
       response.send({ errorMsg: "Invalid Password" });
     }
   }
