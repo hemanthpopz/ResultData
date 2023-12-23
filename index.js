@@ -66,7 +66,6 @@ app.post("/users/", async (request, response) => {
     await db.run(createUserQuery);
     response.send(`User created successfully`);
   } else {
-    response.status(400);
     response.send("User already exists");
   }
 });
