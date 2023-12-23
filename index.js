@@ -51,8 +51,7 @@ const authenticateToken = (request, response, next) => {
 
 //User Register API
 app.post("/users/", async (request, response) => {
-  const { username, name, password, gender, location } = request.body;
-  const hashedPassword = await bcrypt.hash(request.body.password, 10);
+  const { username, password } = request.body;
   const selectUserQuery = `SELECT * FROM user WHERE username = '${username}'`;
   const dbUser = await db.get(selectUserQuery);
   if (dbUser === undefined) {
@@ -62,7 +61,7 @@ app.post("/users/", async (request, response) => {
       VALUES 
         (
           '${username}', 
-          '${hashedPassword}'
+          '${password}'
         )`;
     await db.run(createUserQuery);
     response.send(`User created successfully`);
@@ -81,7 +80,7 @@ app.post("/login/", async (request, response) => {
     response.status(400);
     response.send({ errorMsg: "Invalid User" });
   } else {
-    const isPasswordMatched = await bcrypt.compare(password, dbUser.password);
+    const isPasswordMatched = password === dbUser.password
     if (isPasswordMatched === true) {
       const payload = {
         username: username,
