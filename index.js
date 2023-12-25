@@ -52,14 +52,14 @@ const authenticateToken = (request, response, next) => {
 //User Register API
 app.post("/users/", async (request, response) => {
   const { username, password } = request.body;
-  const selectUserQuery = `SELECT * FROM users WHERE username = '${username}'`;
+  const selectUserQuery = `SELECT * FROM user WHERE username = '${username}'`;
   const dbUser = await db.get(selectUserQuery);
   if (dbUser === undefined) {
 
     const hashedPassword = await bcrypt.hash(password,10)
     const createUserQuery = `
       INSERT INTO 
-        users (username, password) 
+        user (username, password) 
       VALUES 
         (
           '${username}', 
@@ -75,7 +75,7 @@ app.post("/users/", async (request, response) => {
 //User Login API
 app.post("/login/", async (request, response) => {
   const { username, password } = request.body;
-  const selectUserQuery = `SELECT * FROM users WHERE username = '${username}'`;
+  const selectUserQuery = `SELECT * FROM user WHERE username = '${username}'`;
   const dbUser = await db.get(selectUserQuery);
   if (dbUser === undefined) {
     
