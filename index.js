@@ -106,7 +106,7 @@ app.post("/postData", async (request, response) => {
   const { id, input_value, is_checked, status } = request.body;
 
   const post_query = `INSERT INTO todolist(id,input_value,is_checked,status)VALUES
-    (${id},'${input_value}',${is_checked},'${status}')`;
+    ('${id}','${input_value}',${is_checked},'${status}')`;
 
   const result = await db.run(post_query);
 
