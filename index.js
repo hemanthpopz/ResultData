@@ -112,3 +112,19 @@ app.post("/postData", async (request, response) => {
 
   response.send("POST Successfully");
 });
+
+
+app.delete('/deleteData/:id',async(request,response) =>{
+
+
+  const {id} = request.params
+
+  console.log(id)
+
+  const query = `DELETE FROM todolist WHERE id LIKE '${id}'`
+
+  const result = await db.get(query)
+
+  response.send('Deleted Successfully')
+
+})
